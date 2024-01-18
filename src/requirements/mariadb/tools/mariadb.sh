@@ -1,9 +1,14 @@
-service mariadb start
-# service mysql start
+service mysql start
+
+mysqld_safe &
 
 echo "Starting..."
 
-exec mysqld &
+while ! mysqladmin ping --silent; do
+    echo "Loading..."
+    sleep 1
+done
+
 
 touch /tmp/sqltmp
 chmod 777 /tmp/sqltmp
@@ -20,18 +25,10 @@ mysql < /tmp/sqltmp
 
 rm /tmp/sqltmp
 
-echo "Restarting"
+echo "Restarting..."
 
-
-echo "mysqladmin -u root -p${SQL_ROOT_PASSWORD} shutdown" 
 mysqladmin -u root -p${SQL_ROOT_PASSWORD} shutdown
-# ps -ef | grep mysqld_safe 
-# mysql -h 127.0.0.1 -P 3306 -u root -p
-
-echo "..."
-
-exec mysqld_safe
 
 echo "Restart complete."
 
-echo "MariaDB database and user were created successfully! "
+exec mysqld_safe

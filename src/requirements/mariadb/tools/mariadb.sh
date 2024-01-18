@@ -9,24 +9,28 @@ while ! mysqladmin ping --silent; do
     sleep 1
 done
 
+echo "CREATE DATABASE IF NOT EXISTS $SQL_DATABASE; \
+CREATE USER IF NOT EXISTS '$SQL_USER'@'%' IDENTIFIED BY '$SQL_USER_PASSWORD'; \
+GRANT ALL PRIVILEGES ON $SQL_DATABASE.* TO '$SQL_USER'@'%'; \
+FLUSH PRIVILEGES;" | mysql -u root -p$SQL_ROOT_PASSWORD
 
-touch /tmp/sqltmp
-chmod 777 /tmp/sqltmp
+# touch /tmp/sqltmp
+# chmod 777 /tmp/sqltmp
 
 
 
 
-echo "CREATE DATABASE IF NOT EXISTS $SQL_DATABASE; \n\
-CREATE USER IF NOT EXISTS $SQL_USER@'%' IDENTIFIED BY '$SQL_USER_PASSWORD'; \n\
-GRANT ALL PRIVILEGES ON $SQL_DATABASE.* TO $SQL_USER@'%' IDENTIFIED BY '$SQL_USER_PASSWORD'; \n\
-ALTER USER root@'%' IDENTIFIED BY '$SQL_USER_PASSWORD'; \n\
-FLUSH PRIVILEGES;" >> /tmp/sqltmp
+# echo "CREATE DATABASE IF NOT EXISTS $SQL_DATABASE; \n\
+# CREATE USER IF NOT EXISTS $SQL_USER@'%' IDENTIFIED BY '$SQL_USER_PASSWORD'; \n\
+# GRANT ALL PRIVILEGES ON $SQL_DATABASE.* TO $SQL_USER@'%' IDENTIFIED BY '$SQL_USER_PASSWORD'; \n\
+# ALTER USER root@'%' IDENTIFIED BY '$SQL_USER_PASSWORD'; \n\
+# FLUSH PRIVILEGES;" >> /tmp/sqltmp
 
-cat /tmp/sqltmp
+# cat /tmp/sqltmp
 
-mysql < /tmp/sqltmp
+# mysql < /tmp/sqltmp
 
-rm /tmp/sqltmp
+# rm /tmp/sqltmp
 
 echo "Restarting..."
 

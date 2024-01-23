@@ -53,6 +53,7 @@ if ! wp core is-installed --allow-root; then
     echo "i"
     mv /tmp/sources/cv.html /var/www/html/wordpress
 fi
+echo "w"
 
 # Check if the PHP run directory exists, create if not
 if [ ! -d /run/php ]; then

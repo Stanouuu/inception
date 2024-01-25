@@ -11,8 +11,8 @@ services:
     container_name: mariadb
     env_file:
       - .env
-    ports:
-      - "3306:3306"
+    expose:
+      - "3306"
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile

@@ -1,5 +1,10 @@
 service mysql start
 
+if systemctl is-active --quiet mariadb; then
+    sudo systemctl stop mariadb
+fi
+
+
 mysqld_safe --nowatch &
 
 echo "Starting..."
@@ -41,3 +46,5 @@ mysqladmin -u root -p$SQL_ROOT_PASSWORD shutdown
 echo "Restart complete."
 
 exec mysqld_safe
+
+mysqladmin -u root -p$SQL_ROOT_PASSWORD shutdown
